@@ -330,9 +330,21 @@ class Matches:
         for line in lines:
             parts = re.split('\x06', line)
 
+            if parts[1] == '\x03' and parts[2] == '':
+                parts[2] = "function"
+
+            if parts[4] == '[]':
+                parts[4] = "NO_ARGS\x08"
+            else:
+                parts[4] = parts[4].replace('\x02, \x02', '\x07')
+                parts[4] = re.sub(r'\[\x02([^]]*)\x02\], ', r'\g<1>\t', parts[4])
+                parts[4] = re.sub(r'\t$', '\x08', parts[4])
+
+            parts[4] = parts[4] + parts[5] + '\x05' + parts[6]
+
             if len(parts) >= 5:
                 matches.append(self.match.build(word=parts[0],
-                                                struct=parts[1],
+                                                struct=parts[2],
                                                 pkg=parts[3],
                                                 info=parts[4]))
 
