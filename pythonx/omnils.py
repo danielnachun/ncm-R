@@ -340,7 +340,11 @@ class Matches:
                 parts[4] = re.sub(r'\[\x02([^]]*)\x02\], ', r'\g<1>\t', parts[4])
                 parts[4] = re.sub(r'\t$', '\x08', parts[4])
 
-            parts[4] = parts[4] + parts[5] + '\x05' + parts[6]
+            if len(parts) == 6:
+                parts[4] = parts[4] + parts[5]
+
+            if len(parts) == 7:
+                parts[4] = parts[4] + parts[5] + '\x05' + parts[6]
 
             if len(parts) >= 5:
                 matches.append(self.match.build(word=parts[0],
