@@ -46,8 +46,12 @@ class Function:  # pylint: disable=too-few-public-methods
         else:
             args = self._info
 
+        args = re.sub('\], \[', "]\t[", args)
+        args = re.sub('\]|\[', "", args)
+        args = re.sub('\'', "", args)
         args = re.split('\t', args)
-        args = [arg.replace('\x07', ' = ') for arg in args]
+        # args = [arg.replace('\x07', ' = ') for arg in args]
+        args = [arg.replace(', ', ' = ') for arg in args]
 
         self.args = args
 
