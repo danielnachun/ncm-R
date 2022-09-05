@@ -41,8 +41,8 @@ class Source(Rsource):  # pylint: disable=R0902
 
         try:
             self._settings['nvimr_id'] = self.nvim.eval('$NVIMR_ID')
-            self._settings['nvimr_tmp'] = self.nvim.eval('g:rplugin_tmpdir')
-            self._settings['nvimr_cmp'] = self.nvim.eval('g:rplugin_compldir')
+            self._settings['nvimr_tmp'] = self.nvim.eval('g:rplugin.tmpdir')
+            self._settings['nvimr_cmp'] = self.nvim.eval('g:rplugin.compldir')
         except NvimError:
             self._error('Can\'t load Nvim-R options. '
                         'Did you install the Nvim-R plugin?')
@@ -78,7 +78,7 @@ class Source(Rsource):  # pylint: disable=R0902
         old_pkgs = self._pkg_loaded[:]
 
         try:
-            pkg_loaded = self.nvim.eval('g:rplugin_loaded_libs')
+            pkg_loaded = self.nvim.eval('g:rplugin.loaded_libs')
             self._pkg_loaded = list(reversed(pkg_loaded))
         except NvimError:
             self._error('Can\'t find loaded R packages. '
